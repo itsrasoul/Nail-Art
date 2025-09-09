@@ -1,0 +1,6 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+  <h2>Thank you — Order placed!</h2>
+  <p>Order #{{ order.id }} placed. Total: ${{ order.total }}</p>
+{% endblock %}

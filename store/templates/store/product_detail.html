@@ -1,0 +1,15 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+  <div class="product-detail">
+    {% if product.image %}
+      <img src="{{ product.image.url }}" alt="{{ product.title }}">
+    {% endif %}
+    <div class="info">
+      <h2>{{ product.title }}</h2>
+      <p class="price">${{ product.price }}</p>
+      <p>{{ product.description }}</p>
+  <button class="btn add-cart" data-id="{{ product.id }}">Add to cart</button>
+    </div>
+  </div>
+{% endblock %}

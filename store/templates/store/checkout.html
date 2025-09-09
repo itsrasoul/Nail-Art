@@ -1,0 +1,153 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+  <h2>Checkout</h2>
+  <div class="checkout-grid">
+    <aside class="checkout-summary">
+      <h3>Order summary</h3>
+      <ul>
+        {% for item in cart.items.all %}
+          <li>{{ item.product.title }} × {{ item.quantity }} — ${{ item.total_price }}</li>
+        {% endfor %}
+      </ul>
+      <p class="total">Total: ${{ cart.total }}</p>
+    </aside>
+
+    <section class="checkout-form">
+      <h3>Choose Payment Method</h3>
+      
+      <div class="payment-methods">
+        <label class="payment-option" for="id_method_0">
+          <input type="radio" id="id_method_0" name="method" value="card" checked>
+          <div class="payment-card">
+            <div class="payment-icon">💳</div>
+            <div class="payment-details">
+              <div class="payment-name">Credit/Debit Card</div>
+              <div class="payment-desc">Visa, Mastercard, Amex</div>
+            </div>
+          </div>
+        </label>
+        
+        <label class="payment-option" for="id_method_1">
+          <input type="radio" id="id_method_1" name="method" value="bank">
+          <div class="payment-card">
+            <div class="payment-icon">🏦</div>
+            <div class="payment-details">
+              <div class="payment-name">Bank Transfer</div>
+              <div class="payment-desc">Direct bank transfer</div>
+            </div>
+          </div>
+        </label>
+        
+        <label class="payment-option" for="id_method_2">
+          <input type="radio" id="id_method_2" name="method" value="paypal">
+          <div class="payment-card">
+            <div class="payment-icon paypal-logo">🅿️</div>
+            <div class="payment-details">
+              <div class="payment-name">PayPal</div>
+              <div class="payment-desc">Pay with PayPal account</div>
+            </div>
+          </div>
+        </label>
+        
+        <label class="payment-option" for="id_method_3">
+          <input type="radio" id="id_method_3" name="method" value="cashapp">
+          <div class="payment-card">
+            <div class="payment-icon cashapp-logo">$</div>
+            <div class="payment-details">
+              <div class="payment-name">Cash App</div>
+              <div class="payment-desc">Pay with Cash App</div>
+            </div>
+          </div>
+        </label>
+        
+        <label class="payment-option" for="id_method_4">
+          <input type="radio" id="id_method_4" name="method" value="crypto">
+          <div class="payment-card">
+            <div class="payment-icon">₿</div>
+            <div class="payment-details">
+              <div class="payment-name">Cryptocurrency</div>
+              <div class="payment-desc">BTC, ETH, USDT</div>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="payment-fields card-fields" data-method="card">
+          <h4>Card Information</h4>
+          <div class="field">
+            <label for="id_card_number">Card Number</label>
+            {{ form.card_number }}
+          </div>
+          <div class="field two-col">
+            <div>
+              <label for="id_card_expiry">Expiry Date</label>
+              {{ form.card_expiry }}
+            </div>
+            <div>
+              <label for="id_card_cvv">CVV</label>
+              {{ form.card_cvv }}
+            </div>
+          </div>
+          <div class="field">
+            <label for="id_card_name">Cardholder Name</label>
+            {{ form.card_name }}
+          </div>
+        </div>
+
+        <div class="payment-fields bank-fields" data-method="bank">
+          <h4>Bank Transfer Details</h4>
+          <div class="field">
+            <label for="id_bank_name">Bank Account / Routing Info</label>
+            {{ form.bank_name }}
+          </div>
+          <div class="bank-info">
+            <p>Please provide your bank account details for the transfer.</p>
+          </div>
+        </div>
+
+        <div class="payment-fields paypal-fields" data-method="paypal">
+          <h4>PayPal Payment</h4>
+          <div class="field">
+            <label for="id_paypal_email">PayPal Email Address</label>
+            {{ form.paypal_email }}
+          </div>
+          <div class="paypal-info">
+            <p>You'll be redirected to PayPal to complete your payment securely.</p>
+          </div>
+        </div>
+
+        <div class="payment-fields cashapp-fields" data-method="cashapp">
+          <h4>Cash App Payment</h4>
+          <div class="field">
+            <label for="id_cashapp_tag">Cash App Tag or Phone</label>
+            {{ form.cashapp_tag }}
+          </div>
+          <div class="cashapp-info">
+            <p>Enter your Cash App tag (e.g., $username) or phone number.</p>
+          </div>
+        </div>
+
+        <div class="payment-fields crypto-fields" data-method="crypto">
+          <h4>Cryptocurrency Payment</h4>
+          <div class="field">
+            <label for="id_crypto_address">Wallet Address</label>
+            {{ form.crypto_address }}
+          </div>
+          <div class="crypto-info">
+            <p>Send payment to this address. Supported: BTC, ETH, USDT</p>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn primary" type="submit">Place order</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <script src="{% static 'store/js/checkout.js' %}"></script>
+{% endblock %}

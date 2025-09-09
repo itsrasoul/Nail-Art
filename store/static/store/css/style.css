@@ -1,0 +1,157 @@
+:root{
+  --bg: #fff6fb;
+  --accent: #ff9ac6;
+  --accent-2: #ffd7e8;
+  --text: #333;
+}
+*{box-sizing:border-box}
+body{font-family: 'Segoe UI', Tahoma, sans-serif;background:var(--bg);color:var(--text);margin:0}
+.no-scroll-x{overflow-x:hidden}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.site-header{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:16px 0;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+.logo{font-family: 'Brush Script MT', cursive;font-size:28px;color:white;margin:0}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-welcome{display:flex;align-items:center;gap:8px}
+.main-nav a{color:white;margin-left:16px;text-decoration:none;font-weight:600}
+.section-title{color:#f05b96;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px}
+.card{background:white;border-radius:12px;padding:0;transition:transform .18s ease,box-shadow .18s ease;overflow:hidden}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(240,91,150,0.18)}
+.card img{width:100%;height:220px;object-fit:cover;border-radius:12px 12px 0 0;display:block}
+.card img{transition:transform .25s ease,filter .25s ease}
+.card img:hover{transform:scale(1.06) rotate(-1deg);filter:brightness(.98) saturate(1.05)}
+.card-body{padding:8px}
+.price{color:var(--accent);font-weight:700}
+.btn{display:inline-block;background:var(--accent);color:white;padding:8px 12px;border-radius:999px;text-decoration:none;transition:transform .12s ease}
+.btn:hover{transform:scale(1.03)}
+.btn.add-cart{border:0}
+
+/* mini toast */
+.mini-toast{position:fixed;right:18px;bottom:18px;background:#fff;color:var(--accent);padding:8px 12px;border-radius:8px;box-shadow:0 8px 26px rgba(0,0,0,0.12);transform:translateY(8px);opacity:0;transition:all .28s ease;z-index:9999}
+.mini-toast.visible{transform:translateY(0);opacity:1}
+
+/* flying product image */
+.fly-img{pointer-events:none;border-radius:8px;will-change:transform,opacity}
+.product-detail{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.product-detail img{width:100%;border-radius:12px}
+.cart-list{list-style:none;padding:0}
+.placeholder{height:180px;background:linear-gradient(90deg,#ffe8f3,#fff);display:flex;align-items:center;justify-content:center;color:#bbb;border-radius:8px}
+.site-footer{padding:20px;text-align:center;color:#a33}
+.welcome{margin-right:12px;color:#fff;font-weight:600}
+.cart-count{background:#fff;color:var(--accent);padding:4px 8px;border-radius:999px;margin-left:8px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+.main-nav{display:flex;align-items:center;gap:12px}
+.main-nav a{display:inline-flex;align-items:center;gap:8px}
+.nav-avatar{width:34px;height:34px;border-radius:999px;object-fit:cover;border:2px solid rgba(255,255,255,0.35)}
+.dashboard-link .dash-text{display:inline-block}
+@media(max-width:700px){
+  .nav-avatar{width:28px;height:28px}
+  .dashboard-link .dash-text{display:none}
+}
+.avatar{width:120px;border-radius:8px;display:block;margin-bottom:12px}
+/* Dashboard / profile styles */
+.profile-wrap{display:grid;grid-template-columns:280px 1fr;gap:18px;align-items:start}
+.profile-card{background:#fff;border-radius:12px;padding:16px}
+.avatar-lg{width:100%;height:260px;object-fit:cover;border-radius:8px}
+.avatar-placeholder{width:100%;height:260px;background:#fff6f9;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#bbb}
+.muted{color:#777;font-size:13px;margin-top:12px}
+.welcome-box{background:#fff; padding:10px;border-radius:8px;margin-top:8px;color:#f05b96}
+.profile-form{background:#fff;border-radius:12px;padding:16px}
+.profile-form .field{margin-bottom:12px}
+.profile-form label{display:block;font-weight:700;margin-bottom:6px;color:#444}
+.profile-form input[type="text"], .profile-form input[type="file"], .profile-form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #eee;background:#fff}
+.profile-form textarea{min-height:80px}
+.form-actions{margin-top:12px}
+
+@media(max-width:900px){.profile-wrap{grid-template-columns:1fr}}
+
+/* auth form styling */
+.form-card{max-width:480px;margin:18px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,0.06)}
+.auth-form .input-group{margin-bottom:12px}
+.input-label{display:block;margin-bottom:6px;font-weight:700;color:#555}
+.auth-form input[type="text"], .auth-form input[type="password"], .auth-form input[type="email"]{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #eee;background:#fff;box-shadow:inset 0 1px 0 rgba(0,0,0,0.02)}
+.btn.primary{background:#ff4f86}
+.btn.primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,79,134,0.12)}
+
+/* checkout layout */
+.checkout-grid{display:grid;grid-template-columns:360px 1fr;gap:20px}
+.checkout-summary{background:#fff;padding:16px;border-radius:12px}
+.checkout-summary ul{list-style:none;padding:0;margin:0}
+.checkout-summary li{padding:8px 0;border-bottom:1px solid #faf0f6}
+.checkout-form{background:#fff;padding:16px;border-radius:12px}
+.checkout-form .field{margin-bottom:12px}
+.checkout-form input[type="text"], .checkout-form input[type="password"], .checkout-form input[type="email"]{width:100%;padding:10px;border-radius:8px;border:1px solid #eee}
+.checkout-form .two-col{display:flex;gap:10px}
+.checkout-form label{font-weight:700;color:#444}
+.checkout-summary .total{font-weight:900;color:var(--accent);margin-top:12px}
+@media(max-width:900px){.checkout-grid{grid-template-columns:1fr}}
+
+/* payment method fields */
+.payment-fields{display:none}
+.payment-fields.show{display:block}
+.payment-fields h4{margin:20px 0 15px 0;color:#333;font-size:18px}
+.payment-fields .field{margin-bottom:15px}
+.payment-fields input{padding:12px;border:2px solid #e1e5e9;border-radius:8px;font-size:16px}
+.payment-fields input:focus{border-color:#ff4f86;outline:none}
+.payment-fields label{font-weight:600;color:#555;margin-bottom:5px;display:block}
+
+/* payment method selection */
+.payment-methods{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:30px}
+.payment-option{cursor:pointer;display:block}
+.payment-option input{display:none}
+.payment-card{display:flex;align-items:center;padding:16px;border:2px solid #e1e5e9;border-radius:12px;background:#fff;transition:all 0.3s ease}
+.payment-option input:checked + .payment-card{border-color:#ff4f86;background:#fff5f7}
+.payment-card:hover{border-color:#ff4f86}
+.payment-icon{font-size:24px;margin-right:15px;width:40px;text-align:center}
+.paypal-logo{color:#0070ba;font-weight:bold}
+.cashapp-logo{color:#00d632;font-weight:bold;font-size:28px}
+.payment-details{flex:1}
+.payment-name{font-weight:600;color:#333;margin-bottom:2px}
+.payment-desc{color:#666;font-size:14px}
+
+/* payment info sections */
+.paypal-info, .cashapp-info, .crypto-info, .bank-info{background:#f8f9fa;padding:12px;border-radius:8px;margin-top:15px;border-left:4px solid #0070ba}
+.paypal-info{border-left-color:#0070ba}
+.cashapp-info{border-left-color:#00d632}
+.crypto-info{border-left-color:#f7931a}
+.bank-info{border-left-color:#6c757d}
+.paypal-info p, .cashapp-info p, .crypto-info p, .bank-info p{margin:0;color:#555;font-size:14px}
+
+/* cart checkout button */
+.cart-actions{margin-top:12px}
+.checkout-btn{display:inline-block;background:#ff6fa0;color:white;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700}
+.checkout-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(240,91,150,0.14)}
+
+/* persona removed */
+
+/* Hero carousel */
+.hero{margin-bottom:18px;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+.carousel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;height:420px;overflow:hidden;position:relative}
+.carousel-grid .banner-card{display:block;position:relative;overflow:hidden;border-radius:6px}
+.carousel-grid .banner-card{display:block;position:relative;overflow:hidden;border-radius:6px;min-height:220px}
+.carousel-grid .banner{width:100%;height:100%;object-fit:cover;display:block;transition:opacity 1.2s cubic-bezier(.2,.8,.2,1), transform 1.2s cubic-bezier(.2,.8,.2,1);opacity:1;position:absolute;inset:0}
+.carousel-grid .banner-card:hover .banner{transform:scale(1.03)}
+.carousel-grid::after{content:'';position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 100%)}
+
+@media(max-width:900px){.carousel-grid{grid-template-columns:repeat(2,1fr);height:360px}}
+@media(max-width:600px){.carousel-grid{grid-template-columns:1fr;height:220px}}
+
+/* Cart thumbnails */
+.cart-list{list-style:none;padding:0}
+.cart-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#fff;margin-bottom:8px}
+.cart-item .thumb img{width:72px;height:72px;object-fit:cover;border-radius:8px}
+.placeholder-sm{width:72px;height:72px;background:#ffeef7;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#bbb}
+.cart-item .meta{flex:1}
+.cart-item .price{font-weight:700;color:var(--accent)}
+@media(max-width:1000px){.card img{height:200px}}
+@media(max-width:700px){.product-detail{grid-template-columns:1fr}
+  .card img{height:160px}}
+
+/* prevent horizontal scroll when using full-bleed hero */
+html,body{overflow-x:hidden}
+
+/* preview and promo sections removed from templates */
+
+.remove-form{margin-left:8px}
+.remove-btn{background:transparent;border:0;color:#ff6f8f;font-size:18px;cursor:pointer}
+.remove-btn:hover{transform:scale(1.1)}

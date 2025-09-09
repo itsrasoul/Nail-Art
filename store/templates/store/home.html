@@ -1,0 +1,48 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="hero">
+    <div class="carousel-grid">
+      <a class="banner-card" href="#">
+        <img class="banner" src="{% static 'store/images/banner1.png' %}" alt="banner 1">
+        <img class="banner" src="{% static 'store/images/banner4.png' %}" alt="banner 4 alt">
+        <img class="banner" src="{% static 'store/images/banner7.png' %}" alt="banner 7 alt">
+      </a>
+      <a class="banner-card" href="#">
+        <img class="banner" src="{% static 'store/images/banner2.png' %}" alt="banner 2">
+        <img class="banner" src="{% static 'store/images/banner5.png' %}" alt="banner 5 alt">
+        <img class="banner" src="{% static 'store/images/banner8.png' %}" alt="banner 8 alt">
+      </a>
+      <a class="banner-card" href="#">
+        <img class="banner" src="{% static 'store/images/banner3.png' %}" alt="banner 3">
+        <img class="banner" src="{% static 'store/images/banner6.png' %}" alt="banner 6 alt">
+        <img class="banner" src="{% static 'store/images/banner9.png' %}" alt="banner 9 alt">
+      </a>
+    </div>
+  </div>
+
+ 
+
+  <h2 class="section-title">Cute Korean Nail Art & Products</h2>
+  <div class="grid">
+    {% for product in products %}
+      <div class="card">
+        <a href="{% url 'product_detail' slug=product.slug %}">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.title }}">
+          {% else %}
+            <div class="placeholder">No Image</div>
+          {% endif %}
+        </a>
+        <div class="card-body">
+          <h3>{{ product.title }}</h3>
+          <p class="price">${{ product.price }}</p>
+          <button class="btn add-cart" data-id="{{ product.id }}">Add to cart</button>
+        </div>
+      </div>
+    {% empty %}
+      <p>No products yet.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

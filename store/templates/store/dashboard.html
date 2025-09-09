@@ -1,0 +1,45 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+  <h2>Your Dashboard</h2>
+  <div class="profile-wrap">
+    <aside class="profile-card">
+      <h3>Profile</h3>
+      <div class="avatar-preview">
+        {% if profile.avatar %}
+          <img src="{{ profile.avatar.url }}" alt="avatar" class="avatar-lg">
+        {% else %}
+          <div class="avatar-placeholder">No avatar</div>
+        {% endif %}
+      </div>
+      <p class="muted">Welcome text:</p>
+      <blockquote class="welcome-box">{{ profile.welcome_text }}</blockquote>
+    </aside>
+
+    <section class="profile-form">
+      <h3>Edit details</h3>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="field">
+          <label for="id_full_name">Full name</label>
+          {{ form.full_name }}
+        </div>
+        <div class="field">
+          <label for="id_phone">Phone</label>
+          {{ form.phone }}
+        </div>
+        <div class="field">
+          <label for="id_welcome_text">Welcome text</label>
+          {{ form.welcome_text }}
+        </div>
+        <div class="field">
+          <label for="id_avatar">Avatar</label>
+          {{ form.avatar }}
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit">Save</button>
+        </div>
+      </form>
+    </section>
+  </div>
+{% endblock %}

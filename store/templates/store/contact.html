@@ -1,0 +1,10 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+  <h2>Contact us</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Send</button>
+  </form>
+{% endblock %}

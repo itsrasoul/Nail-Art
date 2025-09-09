@@ -1,0 +1,52 @@
+<!doctype html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Nail Shop</title>
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <h1 class="logo">Nail Blossom</h1>
+          {% if user.is_authenticated %}
+            <div class="brand-welcome">
+              <span class="welcome">{{ request.user.profile.welcome_text }} {{ request.user.username }}</span>
+            </div>
+          {% endif %}
+        </div>
+        <nav class="main-nav">
+          <a href="{% url 'home' %}">Home</a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'view_cart' %}">Cart <span class="cart-count">{{ cart_count }}</span></a>
+            <a class="dashboard-link" href="{% url 'dashboard' %}">
+              {% if request.user.profile.avatar %}
+                <img src="{{ request.user.profile.avatar.url }}" alt="avatar" class="nav-avatar">
+              {% else %}
+                <img src="{% static 'store/images/persona.svg' %}" alt="avatar" class="nav-avatar">
+              {% endif %}
+              <span class="dash-text">Dashboard</span>
+            </a>
+            <a href="{% url 'logout' %}">Logout</a>
+          {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+          {% endif %}
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© Nail Blossom</div>
+    </footer>
+  <script src="{% static 'store/js/carousel.js' %}"></script>
+  <script src="{% static 'store/js/cart.js' %}"></script>
+  </body>
+</html>
