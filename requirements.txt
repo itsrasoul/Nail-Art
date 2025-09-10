@@ -1,6 +1,6 @@
 Django==4.2.0
 Pillow>=10.2.0
-# psycopg2-binary>=2.9.9  # Uncomment for production with PostgreSQL
+psycopg2-binary>=2.9.9
 gunicorn>=21.2.0
 whitenoise>=6.6.0
 # Optional: for cloud storage (uncomment if using S3/Cloudinary)
