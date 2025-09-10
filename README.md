@@ -1,6 +1,24 @@
 # Nail Art Shop
 
-A Django-based e-commerce application for nail art products.
+A Django-based ### Deployment Steps
+1. Push your code to GitHub
+2. In Render dashboard, create a new Web Service
+3. Connect your GitHub repository
+4. Configure the service:
+   - **Runtime**: Python 3 (or specify python-3.11 in runtime.txt)
+   - **Build Command**: `chmod +x build.sh && ./build.sh` (uses the build script for better error handling)
+   - **Start Command**: `gunicorn nailshop.wsgi:application --bind 0.0.0.0:$PORT`
+5. Set environment variables:
+   - `DEBUG=False`
+   - `SECRET_KEY` (generate a new random key)
+   - `ALLOWED_HOSTS` (your Render app URL, e.g., `your-app.onrender.com`)
+6. The PostgreSQL database will be automatically created
+7. Deploy the application
+
+### Troubleshooting
+- If you encounter Pillow build errors, ensure you're using Pillow>=10.2.0
+- For Python 3.13 compatibility issues, you can specify Python 3.11 in `runtime.txt`
+- Make sure to use `requirements-prod.txt` for production deploymentlication for nail art products.
 
 ## Local Development
 
@@ -24,11 +42,13 @@ Before deploying, update your `requirements.txt` to include PostgreSQL support:
 
 ```txt
 Django==4.2.0
-Pillow==10.0.1
-psycopg2-binary==2.9.7
+Pillow>=10.2.0
+psycopg2-binary>=2.9.9
 gunicorn==21.2.0
 whitenoise==6.6.0
 ```
+
+**Note**: Pillow version >=10.2.0 is required for compatibility with Python 3.13 on Render.
 
 ### Deployment Steps
 1. Push your code to GitHub
