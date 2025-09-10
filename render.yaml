@@ -2,7 +2,7 @@ services:
   - type: web
     name: nailshop
     runtime: python3
-    buildCommand: chmod +x build.sh && ./build.sh
+    buildCommand: pip install -r requirements.txt && python manage.py migrate --noinput && python manage.py collectstatic --noinput
     startCommand: gunicorn nailshop.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DEBUG
@@ -10,10 +10,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        fromService:
-          type: web
-          name: nailshop
-          property: host
+        value: nailshop.onrender.com
       - key: DB_NAME
         fromDatabase:
           name: nailshop-db
