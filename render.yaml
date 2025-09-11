@@ -3,7 +3,7 @@ services:
     name: nailshop
     runtime: python3
     buildCommand: pip install -r requirements.txt && python manage.py migrate --noinput && python manage.py collectstatic --noinput
-    startCommand: gunicorn nailshop.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: gunicorn app:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DEBUG
         value: False
@@ -11,28 +11,3 @@ services:
         generateValue: true
       - key: ALLOWED_HOSTS
         value: nailshop.onrender.com
-      - key: DB_NAME
-        fromDatabase:
-          name: nailshop-db
-          property: database
-      - key: DB_USER
-        fromDatabase:
-          name: nailshop-db
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: nailshop-db
-          property: password
-      - key: DB_HOST
-        fromDatabase:
-          name: nailshop-db
-          property: host
-      - key: DB_PORT
-        fromDatabase:
-          name: nailshop-db
-          property: port
-
-databases:
-  - name: nailshop-db
-    databaseName: nailshop
-    user: nailshop_user

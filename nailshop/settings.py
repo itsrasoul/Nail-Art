@@ -85,22 +85,53 @@ WSGI_APPLICATION = "nailshop.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Check if we're in production (has DATABASE_URL or PostgreSQL env vars)
+database_url = os.environ.get('DATABASE_URL')
 has_postgres_config = (
-    os.environ.get('DATABASE_URL') or
+    database_url or
     (os.environ.get('DB_NAME') and os.environ.get('DB_USER') and os.environ.get('DB_HOST'))
 )
 
 if has_postgres_config:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME', 'nailshop'),
-            'USER': os.environ.get('DB_USER', 'postgres'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': os.environ.get('DB_PORT', '5432'),
+    if database_url:
+        # Simple DATABASE_URL parsing (basic implementation)
+        # For production, consider installing dj-database-url
+        import re
+        url_match = re.match(r'postgresql://([^:]+):([^@]+)@([^:]+):(\d+)/(.+)', database_url)
+        if url_match:
+            user, password, host, port, db_name = url_match.groups()
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.postgresql',
+                    'NAME': db_name,
+                    'USER': user,
+                    'PASSWORD': password,
+                    'HOST': host,
+                    'PORT': port,
+                }
+            }
+        else:
+            # Fallback if URL parsing fails
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.postgresql',
+                    'NAME': os.environ.get('DB_NAME', 'nailshop'),
+                    'USER': os.environ.get('DB_USER', 'postgres'),
+                    'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+                    'HOST': os.environ.get('DB_HOST', 'localhost'),
+                    'PORT': os.environ.get('DB_PORT', '5432'),
+                }
+            }
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': os.environ.get('DB_NAME', 'nailshop'),
+                'USER': os.environ.get('DB_USER', 'postgres'),
+                'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+                'HOST': os.environ.get('DB_HOST', 'localhost'),
+                'PORT': os.environ.get('DB_PORT', '5432'),
+            }
         }
-    }
 else:
     DATABASES = {
         'default': {
