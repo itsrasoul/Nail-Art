@@ -54,10 +54,6 @@ INSTALLED_APPS = [
     "store",
 ]
 
-# Add whitenoise for production static file serving
-if not DEBUG:
-    INSTALLED_APPS.append("whitenoise.runserver_noreload")
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -68,8 +64,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# Add whitenoise middleware for production static file serving
-if not DEBUG:
+# Ensure WhiteNoise middleware is present so static files are served in
+# production even if DEBUG env resolution behaves unexpectedly.
+if "whitenoise.middleware.WhiteNoiseMiddleware" not in MIDDLEWARE:
     MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 
 ROOT_URLCONF = "nailshop.urls"
@@ -191,9 +188,11 @@ USE_TZ = True
 # Use a leading slash for STATIC_URL so templates generate absolute paths
 STATIC_URL = '/static/'
 
-# Include the repo-level `static/` directory so collectstatic will copy
-# project-level static assets (we keep app static files under app/static/)
-STATICFILES_DIRS = [BASE_DIR / 'static']
+# Include the repo-level `static/` directory if it exists so collectstatic
+# will copy project-level static assets. If it doesn't exist, Django will
+# still collect app static files under app/static/.
+if (BASE_DIR / 'static').exists():
+    STATICFILES_DIRS = [BASE_DIR / 'static']
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
