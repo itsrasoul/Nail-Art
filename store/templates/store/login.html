@@ -3,6 +3,14 @@
 {% block content %}
   <div class="form-card">
     <h2>Login</h2>
+    {% if messages %}
+      <ul class="messages">
+        {% for msg in messages %}
+          <li class="message {{ msg.tags }}">{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
     <form method="post" class="auth-form">
       {% csrf_token %}
       <div class="input-group">
@@ -12,6 +20,8 @@
       <div class="input-group">
         <label class="input-label" for="id_password">Password</label>
         {{ form.password }}
+        {{ form.non_field_errors }}
+        {{ form.password.errors }}
       </div>
       <div class="form-actions">
         <button class="btn primary" type="submit">Sign in</button>

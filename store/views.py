@@ -7,6 +7,7 @@ from .models import Order, OrderItem
 from .forms import ProfileForm, ContactForm, PaymentForm
 from .models import Profile, OrderPayment, Contact
 from django.contrib import messages
+from django.contrib.auth import login as auth_login
 from django.http import JsonResponse
 
 User = get_user_model()
@@ -57,9 +58,12 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            # Log the user in immediately after registration
+            auth_login(request, user)
             # create an empty cart
             Cart.objects.get_or_create(user=user)
-            return redirect('login')
+            messages.success(request, 'Account created and you are now logged in')
+            return redirect('home')
     else:
         form = UserCreationForm()
     return render(request, 'store/register.html', {'form': form})
