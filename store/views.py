@@ -47,9 +47,17 @@ def add_to_cart(request, product_id):
 @login_required
 def remove_from_cart(request, item_id):
     cart, _ = Cart.objects.get_or_create(user=request.user)
-    item = get_object_or_404(CartItem, id=item_id, cart=cart)
+    # Only allow deletion on POST. If item doesn't exist, show a message
+    # instead of raising a 404 so the user sees a friendly response.
     if request.method == 'POST':
+        item = CartItem.objects.filter(id=item_id, cart=cart).first()
+        if not item:
+            messages.error(request, 'The item was not found in your cart')
+            return redirect('view_cart')
         item.delete()
+        messages.success(request, 'Item removed from cart')
+        return redirect('view_cart')
+    # For non-POST requests, just redirect to the cart view.
     return redirect('view_cart')
 
 
