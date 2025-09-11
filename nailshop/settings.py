@@ -26,7 +26,20 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-!r!e5gup6a$q&6p73tk^j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',') if os.environ.get('ALLOWED_HOSTS') else ['localhost', '127.0.0.1']
+_raw_allowed = os.environ.get('ALLOWED_HOSTS', '')
+if _raw_allowed:
+    # allow comma-separated list in env var, trim whitespace
+    ALLOWED_HOSTS = [h.strip() for h in _raw_allowed.split(',') if h.strip()]
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# If running on Render, include the external hostname Render provides
+render_host = os.environ.get('RENDER_EXTERNAL_HOSTNAME') or os.environ.get('RENDER_SERVICE_HOST')
+if render_host:
+    ALLOWED_HOSTS.append(render_host)
+
+# Deduplicate hosts while preserving order
+ALLOWED_HOSTS = list(dict.fromkeys(ALLOWED_HOSTS))
 
 
 # Application definition
