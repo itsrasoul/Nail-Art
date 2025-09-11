@@ -2,11 +2,14 @@ services:
   - type: web
     name: nailshop
     runtime: python3
-    buildCommand: pip install -r requirements.txt && python manage.py migrate --noinput && python manage.py collectstatic --noinput
-  startCommand: gunicorn nailshop.wsgi:application --bind 0.0.0.0:$PORT
+    buildCommand: >
+      pip install -r requirements.txt && 
+      python manage.py migrate --noinput && 
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn nailshop.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DEBUG
-        value: False
+        value: "False"
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
