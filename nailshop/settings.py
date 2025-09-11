@@ -188,7 +188,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+# Use a leading slash for STATIC_URL so templates generate absolute paths
+STATIC_URL = '/static/'
+
+# Include the repo-level `static/` directory so collectstatic will copy
+# project-level static assets (we keep app static files under app/static/)
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -203,6 +209,9 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
+    # Use WhiteNoise storage for static files so files collected into
+    # STATIC_ROOT are served with proper headers in production.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Where to redirect after login (avoid default /accounts/profile/ 404)
 LOGIN_REDIRECT_URL = 'home'
